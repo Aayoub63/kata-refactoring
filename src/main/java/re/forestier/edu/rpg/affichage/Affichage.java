@@ -1,5 +1,7 @@
 package re.forestier.edu.rpg.affichage;
 
+import java.util.TreeMap;
+
 import re.forestier.edu.rpg.joueur.player;
 
 public class Affichage {
@@ -19,10 +21,10 @@ public class Affichage {
         result.append("\nNiveau : ").append(player.retrieveLevel()).append(" (XP totale : ").append(player.getXp()).append(")");
         result.append("\n\nCapacités :");
 
-        // Parcourt les capacités pour afficher l'état actuel du personnage
+        // Parcourt les capacités triées par nom : l'ordre d'une HashMap n'est pas garanti
         // Le format "nom : valeur" permet une lecture rapide des statistiques
 
-        player.getAbilities().forEach((name, level) -> {
+        new TreeMap<>(player.getAbilities()).forEach((name, level) -> {
             result.append("\n   ").append(name).append(" : ").append(level);
         });
         result.append("\n\nInventaire :");
@@ -56,7 +58,7 @@ public class Affichage {
 
         // Capacités
         result.append("## Capacités\n\n");
-        player.getAbilities().forEach((name, value) -> {
+        new TreeMap<>(player.getAbilities()).forEach((name, value) -> {
             result.append("* ").append(name).append(" : ").append(value).append("\n");
         });
         result.append("\n");

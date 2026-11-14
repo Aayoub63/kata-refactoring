@@ -8,9 +8,9 @@ Niveau : **2** (XP totale : 20)
 
 ## Capacités
 
-* DEF : 1
 * ATK : 3
 * CHA : 3
+* DEF : 1
 * INT : 2
 
 ## Inventaire
