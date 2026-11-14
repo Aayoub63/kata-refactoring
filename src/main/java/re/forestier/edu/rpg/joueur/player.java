@@ -47,10 +47,12 @@ public class player {
             }
         }
 
-        // Initialise les capacités au niveau 1 car tous les joueurs commencent au niveau 1
-        // Utilise UpdatePlayer pour maintenir la même couverture de code qu'avant
+        // Initialise les capacités au niveau 1 car tous les joueurs commencent au niveau 1.
+        // Copie de la map : sinon tous les joueurs partagent la table de référence
+        // d'AbilityService, et un level-up modifie les capacités des autres joueurs.
+        // playerClass.name() : nom normalisé ("archer" -> "ARCHER")
 
-        this.abilities = UpdatePlayer.abilitiesPerTypeAndLevel().get(AvatarClass).get(1);
+        this.abilities = new HashMap<>(UpdatePlayer.abilitiesPerTypeAndLevel().get(playerClass.name()).get(1));
     }
 
     /**
