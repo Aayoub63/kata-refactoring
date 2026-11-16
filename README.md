@@ -1,3 +1,46 @@
+# Kata RPG : refactoring et qualité logicielle
+
+Projet de Master 1 (génie logiciel, ISIMA), réalisé en binôme. Le client fournit un code Java difficile à lire, qu'il faut faire évoluer sans le casser.
+
+## Ce que nous avons réalisé
+
+1. **Tests avant tout changement** : tests unitaires et tests d'approbation (ApprovalTests) pour figer le comportement du code d'origine, sans le modifier, jusqu'à une couverture complète avec JaCoCo.
+2. **Tests de mutation** avec PIT, pour vérifier que les tests détectent vraiment les erreurs, en particulier sur les valeurs limites.
+3. **Refactoring**, avec les tests figés :
+   - patron Strategy pour la régénération de vie (une stratégie par classe de joueur) à la place des `if` imbriqués ;
+   - services à responsabilité unique : expérience, capacités, santé ;
+   - énumération `PlayerClass` à la place des chaînes de caractères ;
+   - affichage avec `StringBuilder`.
+4. **Nouvelles fonctionnalités en TDD** (un commit de tests, puis un commit de code) :
+   - correction du bug de l'aventurier au niveau 2 ;
+   - nouvelle classe de joueur : le Gobelin ;
+   - vrais objets (`Item` : nom, description, poids, valeur), vente et poids maximal ;
+   - affichage en Markdown.
+
+## Résultats
+
+| Mesure | À la fin du projet | Après le correctif |
+|---|---|---|
+| Tests | 70, tous verts | 73, tous verts |
+| Couverture JaCoCo | 96 % des instructions, 95 % des branches | 96 % des instructions |
+| Mutation PIT | 126 mutants tués sur 139 (91 %) | 118 sur 139 (85 %) |
+
+## Correctif ultérieur
+
+En reprenant le projet, j'ai trouvé une régression introduite par le refactoring : le cache de la table des capacités était partagé entre tous les joueurs, si bien qu'un joueur qui montait de niveau modifiait les capacités des nouveaux joueurs. Le correctif a été fait en TDD, en deux commits (d'abord les tests qui reproduisent le problème, puis la correction), et intégré à `main` par la [pull request #1](../../pull/1). L'affichage trie désormais les capacités par nom, car l'ordre d'une `HashMap` n'est pas garanti.
+
+## Lancer le projet
+
+```bash
+./gradlew test               # tests
+./gradlew jacocoTestReport   # couverture : build/reports/jacoco/test/html/index.html
+./gradlew pitest             # mutation : build/reports/pitest/index.html
+```
+
+---
+
+# Sujet d'origine
+
 # Correctif - machine ISIMA
 
 Sur les machines ISIMA, vous **devez** :
